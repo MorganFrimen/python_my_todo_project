@@ -28,7 +28,7 @@ class TodoApp(ctk.CTk):
 
         # Добавляем три вкладки
         self.tab_active = self.tabview.add("Активные")
-        self.tab_archive = self.tabview.add("Архив")
+        self.tab_archive = self.tabview.add("Архив задач")
         self.tab_calendar = self.tabview.add("Календарь")
 
         # 2. Создаем КАЛЕНДАРЬ (сначала его, чтобы передать в ввод)
@@ -113,16 +113,26 @@ class TodoApp(ctk.CTk):
             for task in archived_tasks:
                 arch_frame = ctk.CTkFrame(self.scroll_archive)
                 arch_frame.pack(fill="x", pady=2, padx=5)
-                
-                # Текст удаленной задачи
-                ctk.CTkLabel(arch_frame, text=f"📂 {task['title']}", anchor="w").pack(side="left", padx=10)
-                # Время удаления
+
+                text_container = ctk.CTkFrame(arch_frame, fg_color="transparent")
+                text_container.pack(side="left", padx=10, pady=5, fill="x", expand=True)
+
+                # Название задачи
                 ctk.CTkLabel(
-                    arch_frame, 
-                    text=f"Удалено: {task.get('deleted_at', '—')}", 
-                    font=("Arial", 10), 
-                    text_color="gray"
-                ).pack(side="right", padx=10)
+                    text_container, 
+                    text=f"📂 {task['title']}", 
+                    font=("Arial", 13, "bold"), 
+                    anchor="w"
+                ).pack(fill="x")
+
+                # Описание на новой строке
+                ctk.CTkLabel(
+                    text_container, 
+                    text=task['description'], 
+                    font=("Arial", 11), 
+                    text_color="gray", 
+                    anchor="w"
+                ).pack(fill="x")
 
 if __name__ == "__main__":
     # Для теста можно запустить файл напрямую, но лучше через main.py
