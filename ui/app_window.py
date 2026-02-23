@@ -6,6 +6,7 @@ from ui.components.input_frame import InputFrame
 from ui.components.task_item import TaskItem
 from ui.components.archive_item import ArchiveItem
 from ui.components.calendar_frame import CalendarFrame
+from ui.components.search_frame import SearchFrame
 
 # Импорт логики и данных
 from functions.add import add_task
@@ -18,10 +19,14 @@ from storage.persistence import save_all
 class TodoApp(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self.current_search = ""
 
         # Настройки окна
         self.title("My TODO Project v1.4 [Git Edition]")
         self.geometry("600x800")
+
+        self.search_bar = SearchFrame(self, on_search=self.update_search)
+        self.search_bar.pack(pady=10, padx=20, fill="x")
 
         # 1. СИСТЕМА ВКЛАДОК
         self.tabview = ctk.CTkTabview(self, width=580)
@@ -60,6 +65,11 @@ class TodoApp(ctk.CTk):
 
     # --- МЕТОДЫ ЛОГИКИ (СВЯЗКА С ФУНКЦИЯМИ) ---
 
+    # 4. Метод обновления поиска
+    def update_search(self, query):
+        self.current_search = query.lower() # Сохраняем в нижнем регистре для поиска
+        self.refresh_list()
+
     def add_logic(self, title, desc, deadline):
         """Добавление задачи и сохранение"""
         add_task(title, desc, deadline)
@@ -84,10 +94,30 @@ class TodoApp(ctk.CTk):
         """Полная перерисовка списков на основе данных из storage"""
         
         # 1. Очищаем виджеты на обеих вкладках
-        for widget in self.scroll_active.winfo_children():
-            widget.destroy()
-        for widget in self.scroll_archive.winfo_children():
-            widget.destroy()
+        for widget in self.scroll_active.winfo_children(): widget.destroy()
+        for widget in self.scroll_archive.winfo_children(): widget.destroy()
+
+        # ФИЛЬТРАЦИЯ АКТИВНЫХ
+        filtered_active = [
+            t for t in active_tasks 
+            if self.current_search in t['title'].lower() or self.current_search in t['description'].lower()
+        ]
+    
+        for i, task in enumerate(filtered_active, 1):
+            # Находим реальный индекс в исходном списке для кнопок
+            real_idx = active_tasks.index(task) + 1
+            Item = TaskItem(self.scroll_active, task, real_idx, self.done_logic, self.delete_logic)
+            Item.pack(fill="x", pady=5, padx=5)
+
+        filtered_archive = [
+            t for t in archived_tasks 
+            if self.current_search in t['title'].lower() or self.current_search in t['description'].lower()
+        ]
+    
+        for task in reversed(filtered_archive):
+            ArchiveItem(self.scroll_archive, task).pack(fill="x", pady=2, padx=5)
+
+
 
         # 2. Рисуем АКТИВНЫЕ ЗАДАЧИ (через TaskItem)
         if not active_tasks:
@@ -102,6 +132,7 @@ class TodoApp(ctk.CTk):
                     on_delete=self.delete_logic
                 )
                 item.pack(fill="x", pady=5, padx=5)
+
 
         # 3. Рисуем АРХИВ (через ArchiveItem)
         if not archived_tasks:
