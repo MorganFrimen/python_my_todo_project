@@ -23,7 +23,7 @@ class TodoApp(ctk.CTk):
 
         # Настройки окна
         self.title("My TODO Project v1.4 [Git Edition]")
-        self.geometry("600x800")
+        self.geometry("800x800")
 
         self.search_bar = SearchFrame(self, on_search=self.update_search)
         self.search_bar.pack(pady=10, padx=20, fill="x")
