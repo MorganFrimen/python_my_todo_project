@@ -1,7 +1,7 @@
 # ui/app_window.py
 import customtkinter as ctk
 
-# Импорт компонентов (наши "кирпичики")
+# Импорт компонентов
 from ui.components.input_frame import InputFrame
 from ui.components.task_item import TaskItem
 from ui.components.archive_item import ArchiveItem
