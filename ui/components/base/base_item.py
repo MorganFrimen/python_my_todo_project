@@ -1,20 +1,43 @@
-import customtkinter as ctk
+п»їimport customtkinter as ctk
 
 class BaseTaskItem(ctk.CTkFrame):
     def __init__(self, master, task):
         super().__init__(master)
         self.task = task
 
-        # Общий контейнер для текстов
+        self.is_done = task['status'] == "Р’С‹РїРѕР»РЅРµРЅРѕ"
+        self.text_color = "gray" if self.is_done else "white"
+
+        # РћР±С‰РёР№ РєРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ С‚РµРєСЃС‚РѕРІ
         self.text_cont = ctk.CTkFrame(self, fg_color="transparent")
         self.text_cont.pack(side="left", padx=10, pady=5, fill="both", expand=True)
 
-        # Заголовок (Название)
+        # Р—Р°РіРѕР»РѕРІРѕРє (РќР°Р·РІР°РЅРёРµ)
         self.title_lbl = ctk.CTkLabel(self.text_cont, text=task['title'], 
                                      font=("Arial", 14, "bold"), anchor="w")
         self.title_lbl.pack(fill="x")
         
-        # Описание
+        # РћРїРёСЃР°РЅРёРµ
         self.desc_lbl = ctk.CTkLabel(self.text_cont, text=task['description'], 
                                     font=("Arial", 12), text_color="gray", anchor="w")
+        self.desc_lbl.pack(fill="x")
+
+        status_icon = "вњ… " if self.is_done else "вЏі "
+        self.title_lbl = ctk.CTkLabel(
+            self.text_cont, 
+            text=status_icon + task['title'], 
+            font=("Arial", 14, "bold"), 
+            text_color=self.text_color,
+            anchor="w"
+        )
+        self.title_lbl.pack(fill="x")
+        
+        # РћРїРёСЃР°РЅРёРµ
+        self.desc_lbl = ctk.CTkLabel(
+            self.text_cont, 
+            text=task['description'], 
+            font=("Arial", 12), 
+            text_color="gray", 
+            anchor="w"
+        )
         self.desc_lbl.pack(fill="x")
