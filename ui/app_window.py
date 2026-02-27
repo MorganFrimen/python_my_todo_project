@@ -67,8 +67,8 @@ class TodoApp(ctk.CTk):
         self.current_search = query.lower()
         self.refresh_list()
 
-    def add_logic(self, title, desc, deadline):
-        add_task(title, desc, deadline)
+    def add_logic(self, title, desc, deadline, priority):
+        add_task(title, desc, deadline, priority)
         save_all()
         self.refresh_list()
 
@@ -95,7 +95,7 @@ class TodoApp(ctk.CTk):
             if self.current_search in t['title'].lower() or self.current_search in t['description'].lower()
         ]
         
-        for task in filtered_active:
+        for task in reversed (filtered_active):
             # Находим реальный индекс для функций DONE/DELETE
             real_idx = active_tasks.index(task) + 1
             # Используем НОВЫЙ класс-наследник

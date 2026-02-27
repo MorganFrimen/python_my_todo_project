@@ -3,10 +3,19 @@
 class BaseTaskItem(ctk.CTkFrame):
     def __init__(self, master, task):
         super().__init__(master)
+
+        # Определяем цвет полоски по приоритету
+        colors = {"Высокий": "#E74C3C", "Средний": "#F1C40F", "Низкий": "#2ECC71"}
+        p_color = colors.get(task.get('priority', 'Средний'), "gray")
+
         self.task = task
 
         self.is_done = task['status'] == "Выполнено"
         self.text_color = "gray" if self.is_done else "white"
+
+        # ЦВЕТНАЯ ПОЛОСКА СЛЕВА
+        self.priority_line = ctk.CTkFrame(self, width=6, fg_color=p_color)
+        self.priority_line.pack(side="left", fill="y", padx=(0, 5))
 
         # Общий контейнер для текстов
         self.text_cont = ctk.CTkFrame(self, fg_color="transparent")

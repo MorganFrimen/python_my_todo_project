@@ -17,6 +17,16 @@ class InputFrame(ctk.CTkFrame):
         self.entry_desc = ctk.CTkEntry(self, placeholder_text="Описание...", width=300)
         self.entry_desc.pack(pady=5)
 
+        self.priority_var = ctk.StringVar(value="Средний")
+        self.priority_menu = ctk.CTkSegmentedButton(
+            self, 
+            values=["Низкий", "Средний", "Высокий"],
+            variable=self.priority_var,
+            selected_color="#1F6AA5",
+            unselected_color="gray"
+        )
+        self.priority_menu.pack(pady=5)
+
         # 3. Контейнер для Кнопки и Даты (горизонтальный)
         self.action_cont = ctk.CTkFrame(self, fg_color="transparent")
         self.action_cont.pack(pady=10)
@@ -70,9 +80,10 @@ class InputFrame(ctk.CTkFrame):
         title = self.entry_title.get()
         desc = self.entry_desc.get()
         deadline = self.calendar.get_date()
+        priority = self.priority_var.get()
         
         # Вызываем логику добавления
-        self.on_add(title, desc, deadline)
+        self.on_add(title, desc, deadline,priority)
         
         # Очистка полей и сброс кнопки
         self.entry_title.delete(0, 'end')

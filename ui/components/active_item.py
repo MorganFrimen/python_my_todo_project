@@ -31,6 +31,6 @@ class ActiveTaskItem(BaseTaskItem):
             self.text_cont, 
             text=deadline_text, 
             font=("Arial", 10, "italic"), 
-            text_color="gray" if self.is_done else "#FFCC00", 
+            text_color="gray" if self.is_done else "#990000", 
             anchor="w"
         ).pack()
