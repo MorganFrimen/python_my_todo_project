@@ -53,5 +53,34 @@
         "created_at": "25.02.2026 10:16",
         "deadline": "25.02.2026",
         "deleted_at": "25.02.2026 16:12"
+    },
+    {
+        "title": "Сходить в мак",
+        "description": "купить кофе",
+        "status": "Ожидает",
+        "created_at": "27.02.2026 09:03",
+        "deadline": "27.03.2026",
+        "was_expired": false,
+        "deleted_at": "02.03.2026 12:26"
+    },
+    {
+        "title": "задача",
+        "description": "выполнена",
+        "status": "Выполнено",
+        "created_at": "25.02.2026 16:15",
+        "deadline": "02.03.2026",
+        "was_expired": false,
+        "deleted_at": "02.03.2026 12:26"
+    },
+    {
+        "title": "Дописать код",
+        "description": "Обновление времени задач",
+        "status": "Выполнено",
+        "created_at": "02.03.2026 10:49",
+        "deadline": "03.03.2026",
+        "priority": "Средний",
+        "was_expired": false,
+        "completion_status": "Вовремя",
+        "deleted_at": "02.03.2026 13:00"
     }
 ]

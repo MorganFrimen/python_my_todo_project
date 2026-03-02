@@ -16,12 +16,14 @@ from storage.tasks_db import active_tasks
 from storage.history_tasks import archived_tasks
 from storage.persistence import save_all
 
+from functions.postpone import postpone_task
+
 class TodoApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         # Настройки окна
-        self.title("My TODO Project v1.6 [OOP Edition]")
+        self.title("My TODO Project v1.9 [OOP Edition]")
         self.geometry("800x850")
         
         # Переменная для живого поиска
@@ -82,6 +84,12 @@ class TodoApp(ctk.CTk):
             save_all()
             self.refresh_list()
 
+    def postpone_logic(self, n):
+        new_date = self.calendar_view.get_date()
+        if postpone_task(n, new_date):
+            save_all()
+            self.refresh_list()
+
     # --- ГЛАВНЫЙ МЕТОД ОТРИСОВКИ ---
 
     def refresh_list(self):
@@ -98,13 +106,16 @@ class TodoApp(ctk.CTk):
         for task in reversed (filtered_active):
             # Находим реальный индекс для функций DONE/DELETE
             real_idx = active_tasks.index(task) + 1
+            on_postpone=self.postpone_logic
+
             # Используем НОВЫЙ класс-наследник
-            ActiveTaskItem(
+            item = ActiveTaskItem(
                 self.scroll_active, 
                 task, 
                 real_idx, 
-                self.done_logic, 
-                self.delete_logic
+                on_done=self.done_logic, 
+                on_delete=self.delete_logic,
+                on_postpone=self.postpone_logic
             ).pack(fill="x", pady=5, padx=5)
 
         # 2. Фильтрация и отрисовка АРХИВА
