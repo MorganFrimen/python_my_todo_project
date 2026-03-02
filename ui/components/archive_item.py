@@ -1,21 +1,31 @@
+from ui.components.base.base_item import BaseTaskItem
 import customtkinter as ctk
 
-class ArchiveItem(ctk.CTkFrame):
+class ArchiveItem(BaseTaskItem):
     def __init__(self, master, task):
-        super().__init__(master)
+        super().__init__(master, task)
         
-        # Контейнер для текста
-        self.text_cont = ctk.CTkFrame(self, fg_color="transparent")
-        self.text_cont.pack(side="left", padx=10, pady=5, fill="both", expand=True)
-
-        # Заголовок (Название)
-        ctk.CTkLabel(self.text_cont, text=f"📂 {task['title']}", 
-                     font=("Arial", 13, "bold"), anchor="w").pack(fill="x")
+        # Получаем статус завершения
+        comp_status = task.get('completion_status', 'Удалено')
         
-        # Описание (на второй строке)
-        ctk.CTkLabel(self.text_cont, text=task['description'], 
-                     font=("Arial", 11), text_color="gray", anchor="w").pack(fill="x")
+        # Цвета для разных статусов в архиве
+        status_colors = {
+            "Вовремя": "#2ECC71",      # Зеленый
+            "С опозданием": "#E67E22", # Оранжевый
+            "Удалено": "#95A5A6"       # Серый
+        }
+        s_color = status_colors.get(comp_status, "gray")
 
-        # Дата удаления (справа)
-        ctk.CTkLabel(self, text=f"🗑️ {task.get('deleted_at', '—')}", 
-                     font=("Arial", 10), text_color="#555555").pack(side="right", padx=10)
+        # Добавляем метку статуса под описанием
+        self.status_lbl = ctk.CTkLabel(
+            self.text_cont, 
+            text=f"📊 Статус: {comp_status}", 
+            font=("Arial", 10, "bold"), 
+            text_color=s_color,
+            anchor="w"
+        )
+        self.status_lbl.pack(fill="x")
+
+        # Дата удаления/завершения справа
+        ctk.CTkLabel(self, text=f"⏱ {task.get('deleted_at', '-')}", 
+                     font=("Arial", 10), text_color="gray").pack(side="right", padx=10)
