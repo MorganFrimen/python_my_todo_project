@@ -102,5 +102,15 @@
         "priority": "Средний",
         "completion_status": "Вовремя",
         "deleted_at": "03.03.2026 09:34"
+    },
+    {
+        "title": "Написать разрабу",
+        "description": "Задача ModX",
+        "status": "Выполнено",
+        "created_at": "03.03.2026 11:07",
+        "deadline": "03.03.2026",
+        "priority": "Высокий",
+        "completion_status": "Вовремя",
+        "deleted_at": "03.03.2026 11:07"
     }
 ]

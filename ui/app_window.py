@@ -7,6 +7,7 @@ from ui.components.active_item import ActiveTaskItem  # Новое имя
 from ui.components.archive_item import ArchiveItem
 from ui.components.calendar_frame import CalendarFrame
 from ui.components.search_frame import SearchFrame
+from ui.components.dialogs import ConfirmDialog
 
 # Импорт логики и данных
 from functions.add import add_task
@@ -88,6 +89,20 @@ class TodoApp(ctk.CTk):
         if postpone_task(n, new_date):
             save_all()
             self.refresh_list()
+
+    def delete_logic(self, n):
+        """Вызов нашего кастомного окна подтверждения"""
+        task_name = active_tasks[n-1]['title']
+        def do_delete():
+            if move_to_trash(n):
+                save_all()
+                self.refresh_list()
+        ConfirmDialog(
+            self, 
+            title="Удаление", 
+            message=f"Отправить в архив задачу:\n'{task_name}'?", 
+            on_confirm=do_delete
+        )
 
     # --- ГЛАВНЫЙ МЕТОД ОТРИСОВКИ ---
 
