@@ -112,5 +112,15 @@
         "priority": "Высокий",
         "completion_status": "Вовремя",
         "deleted_at": "03.03.2026 11:07"
+    },
+    {
+        "title": "Новый дизайн",
+        "description": "Крточки задач",
+        "status": "Выполнено",
+        "created_at": "03.03.2026 11:12",
+        "deadline": "03.03.2026",
+        "priority": "Высокий",
+        "completion_status": "Вовремя",
+        "deleted_at": "03.03.2026 11:12"
     }
 ]
