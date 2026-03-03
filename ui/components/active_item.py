@@ -1,4 +1,4 @@
-﻿from ui.components.base.base_item import BaseTaskItem
+from ui.components.base.base_item import BaseTaskItem
 import customtkinter as ctk
 
 class ActiveTaskItem(BaseTaskItem):
