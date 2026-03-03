@@ -12,11 +12,10 @@ from ui.components.search_frame import SearchFrame
 from functions.add import add_task
 from functions.complete import mark_as_done
 from functions.delete import move_to_trash
+from functions.postpone import postpone_task
 from storage.tasks_db import active_tasks
 from storage.history_tasks import archived_tasks
 from storage.persistence import save_all
-
-from functions.postpone import postpone_task
 
 class TodoApp(ctk.CTk):
     def __init__(self):

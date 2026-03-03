@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from storage.tasks_db import active_tasks
 
 def postpone_task(number, new_deadline):
     if 0 < number <= len(active_tasks):
         active_tasks[number - 1]['deadline'] = new_deadline
-        # Åñëè ïðîäëèëè, óáèðàåì ñòàòóñ ïðîñðî÷êè (äàåì âòîðîé øàíñ)
+        # Ð•ÑÐ»Ð¸ Ð¿Ñ€Ð¾Ð´Ð»Ð¸Ð»Ð¸, ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ ÑÑ‚Ð°Ñ‚ÑƒÑ Ð¿Ñ€Ð¾ÑÑ€Ð¾Ñ‡ÐºÐ¸ (Ð´Ð°ÐµÐ¼ Ð²Ñ‚Ð¾Ñ€Ð¾Ð¹ ÑˆÐ°Ð½Ñ)
         active_tasks[number - 1]['was_expired'] = False 
         return True
     return False
