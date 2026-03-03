@@ -14,4 +14,3 @@ ENV/
 # Игнорируем кэш Python
 __pycache__/
 *.pyc
-/.vs/slnx.sqlite
